@@ -12,21 +12,20 @@ while true; do
     kill -0 "$$" || exit
 done 2>/dev/null &
 
-# Setup Terminal Finder Commands
-# Show Library Folder
+# Setup Finder Commands
+# Show Library Folder in Finder
 chflags nohidden ~/Library
 
-# Show Hidden Files
+# Show Hidden Files in Finder
 defaults write com.apple.finder AppleShowAllFiles YES
 
-# Show Path Bar
+# Show Path Bar in Finder
 defaults write com.apple.finder ShowPathbar -bool true
 
-# Show Status Bar
+# Show Status Bar in Finder
 defaults write com.apple.finder ShowStatusBar -bool true
 
-# Check for Homebrew,
-# Install if we don't have it
+# Check for Homebrew, and then install it 
 if test ! $(which brew); then
     echo "Installing homebrew..."
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -39,7 +38,7 @@ fi
 echo 'Checking to see if XCode Command Line Tools are installed...'
 brew config
 
-# Make sure we’re using the latest Homebrew.
+# Updating Homebrew.
 echo "Updating Homebrew..."
 brew update
 
