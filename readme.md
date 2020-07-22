@@ -53,3 +53,4 @@ Install the following applications:
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [1Password](https://1password.com/)
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
+- Caffeine (Keeps your screen on)
