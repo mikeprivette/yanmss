@@ -46,6 +46,10 @@ brew update
 echo "Upgrading Homebrew..."
 brew upgrade
 
+# Install iTerm2
+echo "Installing iTerm2..."
+brew cask install iterm2
+
 # Update the Terminal
 # Check for ZSH then change shells
 if test ! $(zsh --version); then
@@ -60,8 +64,23 @@ else
 fi
 
 # Install oh-my-zsh
-#echo "Installing oh-my-zsh"
-#sh -c '$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)'
+echo "Installing oh-my-zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Install ZSH Syntax Highlighting
+echo "Installing ZSH Syntax Highlighting..."
+brew install zsh-syntax-highlighting
+
+# Install Git
+echo "Installing Git..."
+brew install git
+
+# Install Powerline fonts
+echo "Installing Powerline fonts..."
+git clone https://github.com/powerline/fonts.git
+cd fonts
+sh -c ./install.sh
+
 
 # Install ruby
 if test ! $(which ruby); then
@@ -77,7 +96,6 @@ fi
 brew install nmap
 
 # Install other useful binaries.
-brew install git
 brew install speedtest_cli
 
 # Core casks
