@@ -25,7 +25,7 @@ defaults write com.apple.finder ShowPathbar -bool true
 # Show Status Bar in Finder
 defaults write com.apple.finder ShowStatusBar -bool true
 
-# Check for Homebrew, and then install it 
+# Check for Homebrew, and then install it
 if test ! $(which brew); then
     echo "Installing homebrew..."
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -70,7 +70,6 @@ echo "Installing Powerline fonts..."
 git clone https://github.com/powerline/fonts.git
 cd fonts
 sh -c ./install.sh
-
 
 # Install ruby
 if test ! $(which ruby); then
