@@ -8,19 +8,19 @@ This setup script is for modifying some default settings on Mac OS X, installing
 
 ### Modify Finder Preferences
 
-##### Show Library Folder in Finder
+#### Show Library Folder in Finder
 
 ``` chflags nohidden ~/Library ```
 
-##### Show Hidden Files in Finder
+#### Show Hidden Files in Finder
 
 ``` defaults write com.apple.finder AppleShowAllFiles YES ```
 
-##### Show Path Bar in Finder
+#### Show Path Bar in Finder
 
 ``` defaults write com.apple.finder ShowPathbar -bool true ```
 
-##### Show Status Bar in Finder
+#### Show Status Bar in Finder
 
 ``` defaults write com.apple.finder ShowStatusBar -bool true ``` 
 
@@ -30,7 +30,6 @@ Install the following terminal tools:
 
 - [Homebrew](https://brew.sh/)
 - [iTerm2](https://www.iterm2.com/)
-- ZSH (via Homebrew)
 - [oh-my-zsh](https://ohmyz.sh/)
 - [Powerline fonts](https://github.com/powerline/fonts)
 - Git

@@ -51,18 +51,6 @@ echo "Installing iTerm2..."
 brew cask install iterm2
 
 # Update the Terminal
-# Check for ZSH then change shells
-if test ! $(zsh --version); then
-    echo "Installing ZSH..."
-    brew install zsh
-    echo "Changing shells"
-    chsh -s /bin/zsh
-    echo "Check shell change"
-    echo $SHELL
-else
-    echo "ZSH already installed!"
-fi
-
 # Install oh-my-zsh
 echo "Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
