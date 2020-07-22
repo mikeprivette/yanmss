@@ -6,8 +6,6 @@ This setup script is for modifying some default settings on Mac OS X, installing
 
 ## Mac OS X Modifications
 
-----------------------------------------------------------------
-
 ### Modify Finder Preferences
 
 #### Show Library Folder in Finder
@@ -26,8 +24,6 @@ This setup script is for modifying some default settings on Mac OS X, installing
 
 ``` defaults write com.apple.finder ShowStatusBar -bool true ``` 
 
-----------------------------------------------------------------
-
 ### Terminal Tools
 
 Install the following terminal tools:
@@ -41,8 +37,6 @@ Install the following terminal tools:
 - Ruby
 - [Speedtest-cli](https://github.com/sivel/speedtest-cli)
 - [Nmap](https://nmap.org/)
-
-----------------------------------------------------------------
 
 ### Additional Applications
 
