@@ -4,6 +4,14 @@
 
 This setup script is for modifying some default settings on Mac OS X, installing some of my preferred Terminal tools, and a few applications.
 
+## Installation with Curl
+
+To install this script from a brand new Mac (fresh out of the box!) run the following command in terminal:
+
+``` sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/new-mac-setup/master/setup.sh)" ```
+
+If you do not already have Xcode Command Line Tools installed, you will be prompted to install them after being prompted for ``` sudo ``` access.
+
 ## Mac OS X Modifications
 
 ### Modify Finder Preferences
