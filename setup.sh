@@ -57,10 +57,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 echo "Need to logout now to start the new SHELL..."
 logout
 
-# Install ZSH Syntax Highlighting
-echo "Installing ZSH Syntax Highlighting..."
-brew install zsh-syntax-highlighting
-
 # Install Git
 echo "Installing Git..."
 brew install git
