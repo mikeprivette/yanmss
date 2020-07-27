@@ -10,7 +10,11 @@ Please feel free to fork and/or add issues/PRs to help make this work better for
 
 To install this script from a brand new Mac (fresh out of the box!) run the following command in terminal:
 
-``` sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/new-mac-setup/master/setup.sh)" ```
+``` shell
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/new-mac-setup/master/setup.sh)" 
+```
+
+**Want to know what ``` curl -fsSL ``` stands for? Checkout this [link](https://explainshell.com/explain?cmd=curl+-fsSL+example.org#).**
 
 If you do not already have Xcode Command Line Tools installed, you will be prompted to install them after being prompted for ``` sudo ``` access.
 
@@ -28,19 +32,27 @@ All of the following are commands that you can enter directly into Terminal or l
 
 #### Show Library Folder in Finder
 
-``` chflags nohidden ~/Library ```
+``` shell
+chflags nohidden ~/Library
+```
 
 #### Show Hidden Files in Finder
 
-``` defaults write com.apple.finder AppleShowAllFiles YES ```
+``` shell
+defaults write com.apple.finder AppleShowAllFiles YES
+```
 
 #### Show Path Bar in Finder
 
-``` defaults write com.apple.finder ShowPathbar -bool true ```
+``` shell
+defaults write com.apple.finder ShowPathbar -bool true
+```
 
 #### Show Status Bar in Finder
 
-``` defaults write com.apple.finder ShowStatusBar -bool true ``` 
+``` shell
+defaults write com.apple.finder ShowStatusBar -bool true
+``` 
 
 ### Terminal Tools
 
