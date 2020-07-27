@@ -129,7 +129,7 @@ Install the following applications:
 [Alfred](https://www.alfredapp.com/)
 
 ``` shell
-brew cask install --appdir="/Applications" firefox
+brew cask install --appdir="/Applications" alfred
 ```
 
 [Visual Studio Code](https://code.visualstudio.com/)
