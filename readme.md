@@ -11,18 +11,18 @@ Please feel free to fork and/or add issues/PRs to help make this work better for
 To install this script from a brand new Mac (fresh out of the box!) run the following command in terminal:
 
 ``` shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/new-mac-setup/master/setup.sh)" 
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/new-mac-setup/master/setup.sh)"
 ```
 
-**Want to know what ``` curl -fsSL ``` stands for? Checkout this [link](https://explainshell.com/explain?cmd=curl+-fsSL+example.org#).**
+**Want to know what ```curl -fsSL``` stands for? Checkout this [link](https://explainshell.com/explain?cmd=curl+-fsSL+example.org#).**
 
-If you do not already have Xcode Command Line Tools installed, you will be prompted to install them after being prompted for ``` sudo ``` access.
+If you do not already have Xcode Command Line Tools installed, you will be prompted to install them after being prompted for ```sudo``` access.
 
 ### Why ask for sudo access?
 
-You'll need ``` sudo``` access to do the initial Finder modifications, but it is not required to install Homebrew or associated packages. 
+You'll need ```sudo``` access to do the initial Finder modifications, but it is not required to install Homebrew or associated packages.
 
-If you're not comfortable allowing this script to prompt you for ``` sudo ``` access, feel free to copy/paste the commands you want out of this script into the Terminal as you see fit.
+If you're not comfortable allowing this script to prompt you for ```sudo``` access, feel free to copy/paste the commands you want out of this script into the Terminal as you see fit.
 
 ## Mac OS X Modifications
 
@@ -52,18 +52,18 @@ defaults write com.apple.finder ShowPathbar -bool true
 
 ``` shell
 defaults write com.apple.finder ShowStatusBar -bool true
-``` 
+```
 
 ### Terminal Tools
 
-All of the following are commands that you can enter directly into Terminal or let the script run for you. 
+All of the following are commands that you can enter directly into Terminal or let the script run for you.
 
 Install the following terminal tools:
 
 [Homebrew](https://brew.sh/)
 
   ``` shell
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   ```
 
 [Xcode Command Line Tools](https://developer.apple.com/library/archive/technotes/tn2339/_index.html#//apple_ref/doc/uid/DTS40014588-CH1-WHAT_IS_THE_COMMAND_LINE_TOOLS_PACKAGE_)
@@ -77,13 +77,13 @@ brew upgrade
 [iTerm2](https://www.iterm2.com/)
 
   ``` shell
-  brew cask install iterm2 
+  brew cask install iterm2
   ```
   
 [oh-my-zsh](https://ohmyz.sh/)
 
   ``` shell
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" 
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
   ```
 
 Git
