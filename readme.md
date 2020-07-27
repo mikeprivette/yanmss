@@ -4,6 +4,8 @@
 
 This setup script is for modifying some default settings on Mac OS X, installing some of my preferred Terminal tools, and a few applications.
 
+Please feel free to fork and/or add issues/PRs to help make this work better for everyone.
+
 ### Installation with Curl
 
 To install this script from a brand new Mac (fresh out of the box!) run the following command in terminal:
@@ -112,8 +114,46 @@ All of the following are commands that you can enter directly into Terminal or l
 
 Install the following applications:
 
-- [Alfred](https://www.alfredapp.com/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [1Password](https://1password.com/)
-- [Firefox](https://www.mozilla.org/en-US/firefox/new/)
-- Caffeine (Keeps your screen on)
+[Alfred](https://www.alfredapp.com/)
+
+``` shell
+brew cask install --appdir="/Applications" firefox
+```
+
+[Visual Studio Code](https://code.visualstudio.com/)
+
+``` shell
+brew cask install --appdir="/Applications" visual-studio-code
+```
+
+[Firefox](https://www.mozilla.org/en-US/firefox/new/)
+
+``` shell
+brew cask install --appdir="/Applications" firefox
+```
+
+[Slack](https://slack.com/)
+
+``` shell
+brew cask install --appdir="/Applications" slack
+```
+
+[1Password](https://1password.com/)
+
+``` shell
+brew cask install --appdir="/Applications" 1password
+```
+
+Caffeine (Keeps your screen on)
+
+``` shell
+brew cask install --appdir="/Applications" caffeine
+```
+
+### Clean Up
+
+Run the ``` brew ``` cleanup script and remove old or unneeded casks
+
+``` shell
+brew cleanup
+```
