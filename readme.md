@@ -1,4 +1,4 @@
-# Setup.sh
+# YANMSS (Yet Another New Mac Setup Script)
 
 ## About
 
