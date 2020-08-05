@@ -219,3 +219,7 @@ To make the Agnoster theme look the way it does on the wiki page you have to go 
 - Change "Color Presets" to "Solarized Dark"
 - While still in the same window as above, click "Text"
 - Click on the dropdown under Font and select any font with "Powerline" in it. I chose "Meslo LG DZ for Powerline"
+
+### The End
+
+That's all I have folks. I appreciate any feedback and suggestions on how to make this better!
