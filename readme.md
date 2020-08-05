@@ -74,6 +74,8 @@ brew update
 brew upgrade
 ```
 
+If you're familiar with Xcode or Homebrew, you probably realized that the commands above do not directly install Xcode Command Line Tools, but rather just prompt you for installation of said tools.
+
 [iTerm2](https://www.iterm2.com/)
 
   ``` shell
@@ -169,3 +171,51 @@ Run the ``` brew ``` cleanup script and remove old or unneeded casks
 ``` shell
 brew cleanup
 ```
+
+### Post Script Actions
+
+I have not yet figured out to automate the post script actions for some of these installations, so there are a few more steps to manually complete.
+
+#### Enable Any Oh My Zsh Plugins
+
+Oh My Zsh comes with a ton of plugins you can take advantage of. Here is the [wiki](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins) page.
+
+Open your ``` ~/.zshrc ``` file via Terminal
+
+``` shell
+open ~/.zshrc
+```
+
+Find and edit the plugins section to add the ones you want
+
+``` shell
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git brew ruby osx)
+```
+
+#### Set the Oh My Zsh Theme
+
+Open your ``` ~/.zshrc ``` file via Terminal
+
+``` shell
+open ~/.zshrc
+```
+
+Modify the theme. You can find a list of the themes [here](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes.) I personally like the [agnoster](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#agnoster) theme.
+
+``` shell
+ZSH_THEME="agnoster"
+```
+
+Make sure to save and close the file after editing. You may have quit and reopen iTerm2 for the theme to take effect.
+
+To make the Agnoster theme look the way it does on the wiki page you have to go to:
+
+- Open iTerm2
+- Select Preferences
+- Click Profile
+- Click Colors
+- Change "Color Presets" to "Solarized Dark"
+- While still in the same window as above, click "Text"
+- Click on the dropdown under Font and select any font with "Powerline" in it. I chose "Meslo LG DZ for Powerline"
