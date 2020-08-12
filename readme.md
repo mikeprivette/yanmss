@@ -16,7 +16,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/new-mac-setup
 
 **Want to know what ```curl -fsSL``` stands for? Checkout this [link](https://explainshell.com/explain?cmd=curl+-fsSL+example.org#).**
 
-If you do not already have Xcode Command Line Tools installed, you will be prompted to install them after being prompted for ```sudo``` access.
+If you do not already have [Xcode Command Line Tools](https://developer.apple.com/library/archive/technotes/tn2339/_index.html#//apple_ref/doc/uid/DTS40014588-CH1-WHAT_IS_THE_COMMAND_LINE_TOOLS_PACKAGE_) installed, you will be prompted to install them after being prompted for ```sudo``` access.
 
 ### Why ask for sudo access?
 
@@ -66,7 +66,7 @@ Install the following terminal tools:
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   ```
 
-[Xcode Command Line Tools](https://developer.apple.com/library/archive/technotes/tn2339/_index.html#//apple_ref/doc/uid/DTS40014588-CH1-WHAT_IS_THE_COMMAND_LINE_TOOLS_PACKAGE_)
+Update Homebrew
 
 ``` shell
 brew config
@@ -74,14 +74,12 @@ brew update
 brew upgrade
 ```
 
-If you're familiar with Xcode or Homebrew, you probably realized that the commands above do not directly install Xcode Command Line Tools, but rather just prompt you for installation of said tools.
-
 [iTerm2](https://www.iterm2.com/)
 
   ``` shell
   brew cask install iterm2
   ```
-  
+
 [oh-my-zsh](https://ohmyz.sh/)
 
   ``` shell
