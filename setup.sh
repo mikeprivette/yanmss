@@ -26,7 +26,7 @@ defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder ShowStatusBar -bool true
 
 # Check for Homebrew, and then install it
-if test ! $(which brew); then
+if test ! "$(which brew)"; then
     echo "Installing homebrew..."
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     echo "Homebrew installed successfully"
@@ -64,15 +64,15 @@ brew install git
 # Install Powerline fonts
 echo "Installing Powerline fonts..."
 git clone https://github.com/powerline/fonts.git
-cd fonts
+cd fonts || exit
 sh -c ./install.sh
 
 # Install ruby
-if test ! $(which ruby); then
+if test ! "$(which ruby)"; then
     echo "Installing Ruby..."
     brew install ruby
     echo "Adding the brew ruby path to shell config..."
-    echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >>~/.bash_profile
+    echo 'export PATH='"/usr/local/opt/ruby/bin:$PATH" >>~/.bash_profile
 else
     echo "Ruby already installed!"
 fi
