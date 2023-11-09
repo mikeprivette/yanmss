@@ -1,101 +1,89 @@
 #!/usr/bin/env bash
 
-# Install command-line tools using Homebrew.
+# Automated Mac Setup Script - Updated Nov 2023
+# This script installs essential command-line tools and applications using Homebrew.
 
-# Ask for the administrator password upfront.
+echo "Starting Mac setup..."
+
+# Request and keep the administrator password active.
 sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-# Keep-alive: update existing `sudo` time stamp until the script has finished.
-while true; do
-    sudo -n true
-    sleep 60
-    kill -0 "$$" || exit
-done 2>/dev/null &
-
-# Setup Finder Commands
-# Show Library Folder in Finder
-chflags nohidden ~/Library
-
-# Show Hidden Files in Finder
-defaults write com.apple.finder AppleShowAllFiles YES
-
-# Show Path Bar in Finder
-defaults write com.apple.finder ShowPathbar -bool true
-
-# Show Status Bar in Finder
-defaults write com.apple.finder ShowStatusBar -bool true
-
-# Check for Homebrew, and then install it
-if test ! "$(which brew)"; then
-    echo "Installing homebrew..."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    echo "Homebrew installed successfully"
+# Check the system processor: M1/M2/M3 (ARM) or Intel.
+ARCH=$(uname -m)
+if [[ "$ARCH" == "arm64" ]]; then
+    echo "M1/M2/M3 Processor detected. Proceeding with compatible installations."
 else
-    echo "Homebrew already installed!"
+    echo "Intel Processor detected. Proceeding with installations."
 fi
 
-# Install XCode Command Line Tools
-echo 'Checking to see if XCode Command Line Tools are installed...'
-brew config
+# Homebrew Installation: Install Homebrew if not already installed.
+echo "Checking for Homebrew..."
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    echo "Homebrew already installed."
+fi
 
-# Updating Homebrew.
-echo "Updating Homebrew..."
+# Update and Upgrade Homebrew: Ensure Homebrew is up-to-date.
+echo "Updating and Upgrading Homebrew..."
 brew update
-
-# Upgrade any already-installed formulae.
-echo "Upgrading Homebrew..."
 brew upgrade
 
-# Install iTerm2
-echo "Installing iTerm2..."
-brew cask install iterm2
-
-# Update the Terminal
-# Install oh-my-zsh
-echo "Installing oh-my-zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-echo "Need to logout now to start the new SHELL..."
-logout
-
-# Install Git
-echo "Installing Git..."
-brew install git
-
-# Install Powerline fonts
-echo "Installing Powerline fonts..."
-git clone https://github.com/powerline/fonts.git
-cd fonts || exit
-sh -c ./install.sh
-
-# Install ruby
-if test ! "$(which ruby)"; then
-    echo "Installing Ruby..."
-    brew install ruby
-    echo "Adding the brew ruby path to shell config..."
-    echo 'export PATH='"/usr/local/opt/ruby/bin:$PATH" >>~/.bash_profile
+# XCode Command Line Tools: Install if not already present.
+echo "Checking for Xcode Command Line Tools..."
+if ! xcode-select -p >/dev/null 2>&1; then
+    echo "Installing Xcode Command Line Tools..."
+    xcode-select --install
 else
-    echo "Ruby already installed!"
+    echo "Xcode Command Line Tools already installed."
 fi
 
-# Install some CTF tools; see https://github.com/ctfs/write-ups.
-brew install nmap
+# Finder Configuration: Set up Finder preferences like showing hidden files.
+echo "Configuring Finder settings..."
+chflags nohidden ~/Library
+defaults write com.apple.finder AppleShowAllFiles YES
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder ShowStatusBar -bool true
 
-# Install other useful binaries.
-brew install speedtest_cli
+# Restart Finder to apply changes using AppleScript.
+osascript -e 'tell application "Finder" to quit'
+osascript -e 'tell application "Finder" to launch'
 
-# Core casks
-brew cask install --appdir="/Applications" alfred
+# Terminal and Shell Setup: Install iTerm2 and Oh My Zsh.
+echo "Installing iTerm2..."
+brew install --cask --appdir="/Applications" iterm2
+echo "Installing oh-my-zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# Development tool casks
-brew cask install --appdir="/Applications" visual-studio-code
+# Powerline Fonts Installation: Clone and install Powerline fonts.
+echo "Installing Powerline fonts..."
+if [ ! -d "$HOME/fonts" ]; then
+    git clone https://github.com/powerline/fonts.git "$HOME/fonts"
+    pushd "$HOME/fonts" && ./install.sh && popd
+else
+    echo "Powerline fonts already installed."
+fi
 
-# Misc casks
-brew cask install --appdir="/Applications" firefox
-brew cask install --appdir="/Applications" slack
-brew cask install --appdir="/Applications" 1password
-brew cask install --appdir="/Applications" caffeine
+# Python and pip Installation: Install Python and pip (pip is included with Python).
+echo "Checking for Python..."
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "Installing Python..."
+    brew install python
+else
+    echo "Python already installed."
+fi
 
-# Remove outdated versions from the cellar.
+# Core Applications Installation: Install essential applications using Homebrew.
+echo "Installing core applications..."
+brew install --cask --appdir="/Applications" alfred
+brew install --cask --appdir="/Applications" visual-studio-code
+brew install --cask --appdir="/Applications" slack
+brew install --cask --appdir="/Applications" 1password
+
+# Clean up: Remove outdated versions from the cellar.
 echo "Running brew cleanup..."
 brew cleanup
-echo "You're done!"
+
+echo "Mac setup script completed."
