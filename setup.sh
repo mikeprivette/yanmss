@@ -25,12 +25,8 @@ if ! command -v brew >/dev/null 2>&1; then
 
     # Add Homebrew to PATH
     echo "Adding Homebrew to PATH..."
-    if [[ "$ARCH" == "arm64" ]]; then
-        echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
-    else
-        echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
-    fi
-    source ~/.zshrc
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
     echo "Homebrew already installed."
 fi
@@ -65,6 +61,30 @@ echo "Installing iTerm2..."
 brew install --cask --appdir="/Applications" iterm2
 echo "Installing oh-my-zsh..."
 RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Configure .zshrc for Oh My Zsh
+echo "Configuring .zshrc for Oh My Zsh..."
+sed -i '' 's/^ZSH_THEME=".*"$/ZSH_THEME="agnoster"/' ~/.zshrc
+sed -i '' 's/^plugins=(.*)$/plugins=(brew macos)/' ~/.zshrc
+echo 'ZSH_DISABLE_COMPFIX="true"' >> ~/.zshrc
+echo '# Disabling compfix to prevent the "insecure directories" warning when starting zsh' >> ~/.zshrc
+cat << 'EOF' >> ~/.zshrc
+
+# Add my custom functions and settings here.
+preexec() {
+  timer=$(gdate +%s.%N)
+}
+
+precmd() {
+  if [ -n "$timer" ]; then
+    now=$(gdate +%s.%N)
+    elapsed=$(echo "$now - $timer" | bc)
+    timer_show=$(printf "%.2f" $elapsed)
+    echo "Execution time: ${timer_show}s"
+    unset timer
+  fi
+}
+EOF
 
 # Powerline Fonts Installation: Clone and install Powerline fonts.
 echo "Installing Powerline fonts..."
