@@ -22,6 +22,15 @@ echo "Checking for Homebrew..."
 if ! command -v brew >/dev/null 2>&1; then
     echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Add Homebrew to PATH
+    echo "Adding Homebrew to PATH..."
+    if [[ "$ARCH" == "arm64" ]]; then
+        echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
+    else
+        echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
+    fi
+    source ~/.zshrc
 else
     echo "Homebrew already installed."
 fi
@@ -55,7 +64,7 @@ osascript -e 'tell application "Finder" to launch'
 echo "Installing iTerm2..."
 brew install --cask --appdir="/Applications" iterm2
 echo "Installing oh-my-zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Powerline Fonts Installation: Clone and install Powerline fonts.
 echo "Installing Powerline fonts..."
