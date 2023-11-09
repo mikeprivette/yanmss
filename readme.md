@@ -19,7 +19,7 @@ This setup script is designed for automating the configuration of a new Mac. It 
 To install this script on a new Mac, run the following command in the terminal:
 
 ```shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/username/new-mac-setup/master/setup.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/yanmss/master/setup.sh)"
 ```
 
 **Note**: If you do not have [Xcode Command Line Tools](https://developer.apple.com/library/archive/technotes/tn2339/_index.html#//apple_ref/doc/uid/DTS40014588-CH1-WHAT_IS_THE_COMMAND_LINE_TOOLS_PACKAGE_) installed, they will be automatically installed.
