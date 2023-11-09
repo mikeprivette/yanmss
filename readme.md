@@ -31,7 +31,3 @@ After running the installation command, the script will request administrator ac
 ### Contributions
 
 Feel free to fork, submit issues, or PRs to help improve the script for the community.
-
-## License
-
-[MIT License](https://opensource.org/licenses/MIT)
