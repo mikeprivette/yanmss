@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-# Automated Mac Setup Script - Updated Nov 2023
+# Automated Mac Setup Script - Updated Oct 2024
 # This script installs essential command-line tools and applications using Homebrew.
 
-echo "Starting Mac setup..."
+# Enable strict mode for safety
+set -euo pipefail
+
+# Log the start of the script execution
+echo "[$(date)] Starting Mac setup..."
 
 # Request and keep the administrator password active.
 sudo -v
@@ -12,41 +16,41 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Check the system processor: M1/M2/M3 (ARM) or Intel.
 ARCH=$(uname -m)
 if [[ "$ARCH" == "arm64" ]]; then
-    echo "M1/M2/M3 Processor detected. Proceeding with compatible installations."
+    echo "[$(date)] M1/M2/M3 Processor detected. Proceeding with compatible installations."
 else
-    echo "Intel Processor detected. Proceeding with installations."
+    echo "[$(date)] Intel Processor detected. Proceeding with installations."
 fi
 
 # Homebrew Installation: Install Homebrew if not already installed.
-echo "Checking for Homebrew..."
+echo "[$(date)] Checking for Homebrew..."
 if ! command -v brew >/dev/null 2>&1; then
-    echo "Installing Homebrew..."
+    echo "[$(date)] Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
     # Add Homebrew to PATH
-    echo "Adding Homebrew to PATH..."
+    echo "[$(date)] Adding Homebrew to PATH..."
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-    echo "Homebrew already installed."
+    echo "[$(date)] Homebrew already installed."
 fi
 
 # Update and Upgrade Homebrew: Ensure Homebrew is up-to-date.
-echo "Updating and Upgrading Homebrew..."
+echo "[$(date)] Updating and Upgrading Homebrew..."
 brew update
 brew upgrade
 
 # XCode Command Line Tools: Install if not already present.
-echo "Checking for Xcode Command Line Tools..."
+echo "[$(date)] Checking for Xcode Command Line Tools..."
 if ! xcode-select -p >/dev/null 2>&1; then
-    echo "Installing Xcode Command Line Tools..."
+    echo "[$(date)] Installing Xcode Command Line Tools..."
     xcode-select --install
 else
-    echo "Xcode Command Line Tools already installed."
+    echo "[$(date)] Xcode Command Line Tools already installed."
 fi
 
 # Finder Configuration: Set up Finder preferences like showing hidden files.
-echo "Configuring Finder settings..."
+echo "[$(date)] Configuring Finder settings..."
 chflags nohidden ~/Library
 defaults write com.apple.finder AppleShowAllFiles YES
 defaults write com.apple.finder ShowPathbar -bool true
@@ -57,13 +61,13 @@ osascript -e 'tell application "Finder" to quit'
 osascript -e 'tell application "Finder" to launch'
 
 # Terminal and Shell Setup: Install iTerm2 and Oh My Zsh.
-echo "Installing iTerm2..."
+echo "[$(date)] Installing iTerm2..."
 brew install --cask --appdir="/Applications" iterm2
-echo "Installing oh-my-zsh..."
+echo "[$(date)] Installing oh-my-zsh..."
 RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Configure .zshrc for Oh My Zsh
-echo "Configuring .zshrc for Oh My Zsh..."
+echo "[$(date)] Configuring .zshrc for Oh My Zsh..."
 sed -i '' 's/^ZSH_THEME=".*"$/ZSH_THEME="agnoster"/' ~/.zshrc
 sed -i '' 's/^plugins=(.*)$/plugins=(brew macos)/' ~/.zshrc
 echo 'ZSH_DISABLE_COMPFIX="true"' >> ~/.zshrc
@@ -87,32 +91,34 @@ precmd() {
 EOF
 
 # Powerline Fonts Installation: Clone and install Powerline fonts.
-echo "Installing Powerline fonts..."
+echo "[$(date)] Installing Powerline fonts..."
 if [ ! -d "$HOME/fonts" ]; then
     git clone https://github.com/powerline/fonts.git "$HOME/fonts"
     pushd "$HOME/fonts" && ./install.sh && popd
 else
-    echo "Powerline fonts already installed."
+    echo "[$(date)] Powerline fonts already installed."
 fi
 
 # Python and pip Installation: Install Python and pip (pip is included with Python).
-echo "Checking for Python..."
+echo "[$(date)] Checking for Python..."
 if ! command -v python3 >/dev/null 2>&1; then
-    echo "Installing Python..."
+    echo "[$(date)] Installing Python..."
     brew install python
 else
-    echo "Python already installed."
+    echo "[$(date)] Python already installed."
 fi
 
 # Core Applications Installation: Install essential applications using Homebrew.
-echo "Installing core applications..."
+echo "[$(date)] Installing core applications..."
 brew install --cask --appdir="/Applications" alfred
 brew install --cask --appdir="/Applications" visual-studio-code
 brew install --cask --appdir="/Applications" slack
 brew install --cask --appdir="/Applications" 1password
 
 # Clean up: Remove outdated versions from the cellar.
-echo "Running brew cleanup..."
+echo "[$(date)] Running brew cleanup..."
 brew cleanup
 
-echo "Mac setup script completed."
+# Ensure successful completion
+echo "[$(date)] Mac setup script completed successfully."
+exit 0
