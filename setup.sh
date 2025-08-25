@@ -74,6 +74,14 @@ update_homebrew() {
 
 update_homebrew
 
+# Install coreutils for gdate and bc for calculations
+install_prerequisites() {
+  echo "[$(date)] Installing prerequisites..."
+  brew install coreutils bc
+}
+
+install_prerequisites
+
 # Function to install XCode Command Line Tools
 install_xcode_tools() {
   echo "[$(date)] Checking for Xcode Command Line Tools..."
