@@ -114,7 +114,6 @@ install_cli_tools() {
   brew install ripgrep  # Fast grep alternative
   brew install fd       # Fast find alternative
   brew install htop     # Better top
-  brew install wget     # Alternative to curl
 }
 
 install_cli_tools
