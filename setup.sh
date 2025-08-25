@@ -6,6 +6,11 @@
 # Enable strict mode for safety
 set -euo pipefail
 
+# Force bash if we're running under sh
+if [ -z "$BASH_VERSION" ]; then
+    exec /bin/bash "$0" "$@"
+fi
+
 # Log the start of the script execution
 LOGFILE="$HOME/mac_setup_$(date +'%Y%m%d_%H%M%S').log"
 exec > >(tee -a "$LOGFILE") 2>&1
@@ -113,15 +118,31 @@ install_terminal_tools() {
   echo "[$(date)] Installing iTerm2..."
   brew install --cask --appdir="/Applications" iterm2
   echo "[$(date)] Installing oh-my-zsh..."
-  RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  
+  # Check if Oh My Zsh is already installed
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  else
+    echo "[$(date)] Oh My Zsh already installed."
+  fi
 
-  # Backup existing .zshrc
-  backup_file ~/.zshrc
-
-  # Configure .zshrc for Oh My Zsh
-  echo "[$(date)] Configuring .zshrc for Oh My Zsh..."
-  sed -i '' 's/^ZSH_THEME=".*"$/ZSH_THEME="agnoster"/' ~/.zshrc
-  sed -i '' 's/^plugins=(.*)$/plugins=(brew macos)/' ~/.zshrc
+  # Ensure .zshrc exists (Oh My Zsh should create it, but we'll make sure)
+  if [ ! -f "$HOME/.zshrc" ]; then
+    echo "[$(date)] Creating .zshrc file..."
+    touch "$HOME/.zshrc"
+    echo 'export ZSH="$HOME/.oh-my-zsh"' >> ~/.zshrc
+    echo 'ZSH_THEME="agnoster"' >> ~/.zshrc
+    echo 'plugins=(brew macos)' >> ~/.zshrc
+    echo 'source $ZSH/oh-my-zsh.sh' >> ~/.zshrc
+  else
+    # Backup existing .zshrc
+    backup_file ~/.zshrc
+    
+    # Configure .zshrc for Oh My Zsh
+    echo "[$(date)] Configuring .zshrc for Oh My Zsh..."
+    sed -i '' 's/^ZSH_THEME=".*"$/ZSH_THEME="agnoster"/' ~/.zshrc
+    sed -i '' 's/^plugins=(.*)$/plugins=(brew macos)/' ~/.zshrc
+  fi
   echo 'ZSH_DISABLE_COMPFIX="true"' >> ~/.zshrc
   echo '# Disabling compfix to prevent the "insecure directories" warning when starting zsh' >> ~/.zshrc
   cat << 'EOF' >> ~/.zshrc
