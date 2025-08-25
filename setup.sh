@@ -124,51 +124,98 @@ configure_finder
 install_terminal_tools() {
   echo "[$(date)] Installing iTerm2..."
   brew install --cask --appdir="/Applications" iterm2
-  echo "[$(date)] Installing oh-my-zsh..."
   
+  echo "[$(date)] Installing oh-my-zsh..."
   # Check if Oh My Zsh is already installed
   if [ ! -d "$HOME/.oh-my-zsh" ]; then
     RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   else
     echo "[$(date)] Oh My Zsh already installed."
   fi
-
-  # Ensure .zshrc exists (Oh My Zsh should create it, but we'll make sure)
-  if [ ! -f "$HOME/.zshrc" ]; then
-    echo "[$(date)] Creating .zshrc file..."
-    touch "$HOME/.zshrc"
-    echo 'export ZSH="$HOME/.oh-my-zsh"' >> ~/.zshrc
-    echo 'ZSH_THEME="agnoster"' >> ~/.zshrc
-    echo 'plugins=(brew macos)' >> ~/.zshrc
-    echo 'source $ZSH/oh-my-zsh.sh' >> ~/.zshrc
+  
+  # Install additional zsh plugins
+  echo "[$(date)] Installing zsh plugins..."
+  ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+  
+  # Install zsh-autosuggestions
+  if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
   else
-    # Backup existing .zshrc
-    backup_file ~/.zshrc
-    
-    # Configure .zshrc for Oh My Zsh
-    echo "[$(date)] Configuring .zshrc for Oh My Zsh..."
-    sed -i '' 's/^ZSH_THEME=".*"$/ZSH_THEME="agnoster"/' ~/.zshrc
-    sed -i '' 's/^plugins=(.*)$/plugins=(brew macos)/' ~/.zshrc
+    echo "[$(date)] zsh-autosuggestions already installed."
   fi
-  echo 'ZSH_DISABLE_COMPFIX="true"' >> ~/.zshrc
-  echo '# Disabling compfix to prevent the "insecure directories" warning when starting zsh' >> ~/.zshrc
-  cat << 'EOF' >> ~/.zshrc
+  
+  # Install zsh-syntax-highlighting
+  if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+  else
+    echo "[$(date)] zsh-syntax-highlighting already installed."
+  fi
 
-# Add my custom functions and settings here.
+  # Configure .zshrc properly
+  echo "[$(date)] Configuring .zshrc..."
+  
+  # Backup existing .zshrc if it exists
+  if [ -f "$HOME/.zshrc" ]; then
+    backup_file ~/.zshrc
+  fi
+  
+  # Create a new .zshrc with proper configuration
+  cat > ~/.zshrc << 'ZSHRC_CONFIG'
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- agnoster looks great with Powerline fonts
+# Other good themes: robbyrussell, powerlevel10k/powerlevel10k
+ZSH_THEME="agnoster"
+
+# Disable compfix warning for insecure directories
+ZSH_DISABLE_COMPFIX="true"
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+plugins=(
+  git
+  brew
+  macos
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  colored-man-pages
+  command-not-found
+)
+
+# Load Oh My Zsh
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# Custom functions for execution time tracking
 preexec() {
-  timer=$(gdate +%s.%N)
+  timer=$(gdate +%s.%N 2>/dev/null || date +%s)
 }
 
 precmd() {
   if [ -n "$timer" ]; then
-    now=$(gdate +%s.%N)
-    elapsed=$(echo "$now - $timer" | bc)
-    timer_show=$(printf "%.2f" $elapsed)
-    echo "Execution time: ${timer_show}s"
+    now=$(gdate +%s.%N 2>/dev/null || date +%s)
+    if command -v bc >/dev/null 2>&1 && command -v gdate >/dev/null 2>&1; then
+      elapsed=$(echo "$now - $timer" | bc)
+      timer_show=$(printf "%.2f" $elapsed)
+      echo "Execution time: ${timer_show}s"
+    fi
     unset timer
   fi
 }
-EOF
+
+# Aliases
+alias ll="ls -la"
+alias la="ls -A"
+alias l="ls -CF"
+
+# Set PATH for Homebrew
+export PATH="/opt/homebrew/bin:$PATH"
+ZSHRC_CONFIG
+  
+  echo "[$(date)] .zshrc configuration complete."
 }
 
 backup_file() {
