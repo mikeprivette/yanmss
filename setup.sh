@@ -33,6 +33,20 @@ detect_architecture() {
 
 detect_architecture
 
+# Retry logic for network-related commands
+retry() {
+  local n=0
+  local try=5
+  local cmd="$@"
+  until [ $n -ge $try ]
+  do
+      $cmd && break
+      n=$((n+1))
+      echo "Retry $n/$try failed for: $cmd"
+      sleep 5
+  done
+}
+
 # Function to install Homebrew if not already installed
 install_homebrew() {
   echo "[$(date)] Checking for Homebrew..."
@@ -47,20 +61,6 @@ install_homebrew() {
   else
       echo "[$(date)] Homebrew already installed."
   fi
-}
-
-# Retry logic for network-related commands
-retry() {
-  local n=0
-  local try=5
-  local cmd="$@"
-  until [ $n -ge $try ]
-  do
-      $cmd && break
-      n=$((n+1))
-      echo "Retry $n/$try failed for: $cmd"
-      sleep 5
-  done
 }
 
 install_homebrew
