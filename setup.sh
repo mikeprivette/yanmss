@@ -138,8 +138,9 @@ EOF
 backup_file() {
   local file="$1"
   if [[ -f "$file" ]]; then
-      cp "$file" "${file}.bak_$(date +'%Y%m%d_%H%M%S')"
-      echo "[$(date)] Backed up $file to ${file}.bak_$(date +'%Y%m%d_%H%M%S')"
+      local backup_suffix="$(date +'%Y%m%d_%H%M%S')"
+      cp "$file" "${file}.bak_${backup_suffix}"
+      echo "[$(date)] Backed up $file to ${file}.bak_${backup_suffix}"
   fi
 }
 
