@@ -94,6 +94,31 @@ install_prerequisites() {
 
 install_prerequisites
 
+# Install useful command-line tools
+install_cli_tools() {
+  echo "[$(date)] Installing command-line tools..."
+  
+  # Install z - a smarter cd command
+  echo "[$(date)] Installing z (smart directory jumping)..."
+  brew install z
+  
+  # Install bat - a better cat with syntax highlighting
+  echo "[$(date)] Installing bat (better cat with syntax highlighting)..."
+  brew install bat
+  
+  # Install other useful tools
+  echo "[$(date)] Installing additional CLI tools..."
+  brew install tree     # Display directory structure
+  brew install tldr     # Simplified man pages
+  brew install jq       # JSON processor
+  brew install ripgrep  # Fast grep alternative
+  brew install fd       # Fast find alternative
+  brew install htop     # Better top
+  brew install wget     # Alternative to curl
+}
+
+install_cli_tools
+
 # Function to install XCode Command Line Tools
 install_xcode_tools() {
   echo "[$(date)] Checking for Xcode Command Line Tools..."
@@ -178,6 +203,7 @@ plugins=(
   git
   brew
   macos
+  z
   zsh-autosuggestions
   zsh-syntax-highlighting
   colored-man-pages
@@ -210,9 +236,22 @@ precmd() {
 alias ll="ls -la"
 alias la="ls -A"
 alias l="ls -CF"
+alias cat="bat"           # Use bat instead of cat
+alias ocat="/bin/cat"     # Original cat if needed
 
 # Set PATH for Homebrew
 export PATH="/opt/homebrew/bin:$PATH"
+
+# Initialize z for smart directory jumping
+if command -v brew >/dev/null 2>&1; then
+  # Load z installed via Homebrew
+  if [ -f "$(brew --prefix)/etc/profile.d/z.sh" ]; then
+    source "$(brew --prefix)/etc/profile.d/z.sh"
+  fi
+fi
+
+# Bat configuration
+export BAT_THEME="TwoDark"  # Set a nice theme for bat
 ZSHRC_CONFIG
   
   echo "[$(date)] .zshrc configuration complete."
