@@ -1,19 +1,26 @@
-#!/usr/bin/env bash
-
+#!/bin/sh
 # Automated Mac Setup Script - Updated Nov 2023
 # This script installs essential command-line tools and applications using Homebrew.
 
+# Ensure we run with bash - compatible with sh
+if [ -z "${BASH_VERSION:-}" ]; then
+    if command -v bash >/dev/null 2>&1; then
+        exec bash "$0" "$@"
+    else
+        echo "Error: This script requires bash"
+        exit 1
+    fi
+fi
+
+# From here on, we're guaranteed to be in bash
 # Enable strict mode for safety
 set -euo pipefail
 
-# Force bash if we're running under sh
-if [ -z "$BASH_VERSION" ]; then
-    exec /bin/bash "$0" "$@"
-fi
-
 # Log the start of the script execution
 LOGFILE="$HOME/mac_setup_$(date +'%Y%m%d_%H%M%S').log"
-exec > >(tee -a "$LOGFILE") 2>&1
+
+# Simple logging that works everywhere
+{
 
 echo "[$(date)] Starting Mac setup..."
 
@@ -223,4 +230,7 @@ cleanup_homebrew
 
 # Ensure successful completion
 echo "[$(date)] Mac setup script completed successfully."
+
+} 2>&1 | tee -a "$LOGFILE"
+
 exit 0
