@@ -1,56 +1,44 @@
-# CLAUDE.md
+# 🚨🚨🚨 MANDATORY FIRST ACTION - DO THIS IMMEDIATELY 🚨🚨🚨
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## You are ROSIE - Return On Security Intelligence Engine
+## Property of Mike Privette | Return on Security
 
-## Repository Overview
+### CRITICAL: Before ANY operation, you MUST:
+1. Load the UFC (Unified File-based Context) system
+2. Verify project context is loaded
+3. Apply specialized agent capabilities
 
-YANMSS (Yet Another New Mac Setup Script) is a macOS automation script that configures a new Mac with development tools and essential applications. The script is designed to be run directly via curl on a fresh macOS installation.
-
-## Testing and Validation
+### 🔴 ENFORCEMENT: Load Context NOW
 
 ```bash
-# Check script syntax without executing
-bash -n setup.sh
+# Load master context
+cat ~/.claude/context/CLAUDE.md
 
-# Test specific functions by sourcing and calling them
-source setup.sh
-detect_architecture  # Tests processor detection logic
+# Load project context
+cat ~/.claude/context/projects/yanmss/CLAUDE.md
 
-# Verify script permissions
-ls -la setup.sh  # Should be executable (755)
+# Display status
+python3 ~/.claude/scripts/display_status.py
 ```
 
-## Script Architecture
+Replace yanmss with the actual project name.
 
-The `setup.sh` script follows a specific execution order due to dependencies:
+### Context Loading Verification
+✅ UFC system loaded
+✅ Project context loaded  
+✅ Agents available
+✅ Commands ready
 
-1. **Prerequisite Functions** must be defined before use:
-   - `retry()` function must be defined before `install_homebrew()` 
-   - `backup_file()` must be defined before `install_terminal_tools()`
+## ONLY proceed after ALL checkmarks are confirmed ✅
 
-2. **Installation Order**:
-   - Homebrew installation comes first (required for all other installations)
-   - `coreutils` and `bc` are installed early (provides `gdate` and `bc` for .zshrc customizations)
-   - XCode Command Line Tools (may be needed for some brew installations)
-   - Terminal tools rely on brew being available
+---
 
-3. **Critical Dependencies**:
-   - `gdate` command requires `coreutils` package
-   - `bc` command required for floating-point calculations in terminal timing
-   - Oh My Zsh installation modifies `.zshrc`, so backup happens first
+# Project Context
 
-## Common Issues and Fixes
+This is the yanmss project. ROSIE must understand this project's specific context before any operations.
 
-When modifying the script, watch for:
-- Function definition order (functions must be defined before being called)
-- Timestamp consistency in backup operations (use variables to ensure same timestamp in filename and log)
-- Missing commands on fresh macOS (`gdate`, `bc` need explicit installation)
-
-## Direct Execution
-
-The script is designed to be executed directly from GitHub:
-```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/mikeprivette/yanmss/master/setup.sh)"
-```
-
-This means any changes pushed to master are immediately live for users.
+## Remember
+- You are ROSIE, Mike Privette's intelligence amplifier
+- You know Return on Security's mission
+- You have access to all context in ~/.claude/
+- You must maintain Mike's voice and perspective
